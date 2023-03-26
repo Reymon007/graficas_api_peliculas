@@ -20,7 +20,7 @@ const obtenerPeliculas = async () =>{
     /* const json = await response.json();
     console.log(response); */
 
-    const {results} = await response.json() //Destructuración { msg, error, results}
+    const { results } = await response.json(); //Destructuración { msg, error, results}
     console.log(results);
 
     //Manipular Json en chart
@@ -33,11 +33,11 @@ const obtenerPeliculas = async () =>{
     const chartConfiguracion = {
         type: 'bar',
         data:{
-            labels:primerPelicula.genre_ids.map(genre => genre.ids),
+            labels:results.map(title =>title.title ),
             datasets:[{
-                labels: 'Peliculas más votadas',
-                results: primerPelicula.genre_ids.map(genre => genre.ids),
-                backgroundColor: primerPelicula.genre_ids.map(() => 'rgba(255, 99, 132, 0.2)')
+                label: 'Peliculas más votadas',
+                data: results.map( popularity => popularity.popularity),
+                backgroundColor: results.map(() => 'rgba(255, 99, 132, 0.2)')
             }]
         },
         options: {
@@ -53,9 +53,8 @@ const obtenerPeliculas = async () =>{
 
 
    //Recibe el canvas del html
-   new Chart(
+   const chart = new Chart(
     chartPeliculasPopulares,
     chartConfiguracion
 );
 }
-
